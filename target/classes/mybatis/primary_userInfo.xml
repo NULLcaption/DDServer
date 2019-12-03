@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.server.mapper.UserMapper">
+
+    <select id="primary_getUserInfoByLoginId" resultType="com.server.pojo.UserInfoDo" parameterType="java.lang.String">
+        select h.id as userid,
+               h.lastname as name
+        from hrmresource h where h.loginid=#{loginId}
+    </select>
+
+    <select id="primary_getUserInfoList" resultType="com.server.pojo.UserInfoDo" parameterType="java.lang.String">
+        select h.loginid as userid, h.lastname as name
+          from hrmresource h
+         where h.departmentid = #{deptId} and h.loginid in ('sy.wu01','xg.chen','jj.zhu','cf.xiong') AND  h.loginid is not null
+    </select>
+
+    <select id="primary_getDeptAdminByJobnumber" resultType="com.server.pojo.DeptAdmin"
+            parameterType="java.lang.String">
+        select  t.id id,
+                t.gd_cbzx costCenter,
+                t.gd_cbzxms costCenterDesc,
+                t.gd_bmzcgly deptAdmin,
+                t.jobnumber jobnumber,
+                t.userid userId
+          from uf_bmzcgly t where t.jobnumber=#{jobnumber}
+    </select>
+
+    <select id="primary_getDeptAdminByCostCen" parameterType="java.lang.String" resultType="com.server.pojo.DeptAdmin">
+        select  t.id id,
+                t.gd_cbzx costCenter,
+                t.gd_cbzxms costCenterDesc,
+                t.gd_bmzcgly deptAdmin,
+                t.jobnumber jobnumber,
+                t.userid userId
+          from uf_bmzcgly t where t.gd_cbzx=#{costCenter}
+    </select>
+
+    <!-- 明细 select t.* from uf_gdzcpdb_dt1 t where t.mainid=18 and t.gd_cbzx='HZ0101'-->
+    <select id="primary_getPropertyList" resultType="com.server.pojo.PropertyInfo" parameterType="java.lang.String">
+        select t.id id,
+            t.gd_lbms propertyName,
+            t.gd_zcbh propertyId,
+            t.gd_cbzx costCenter,
+            tt.gd_zclbms costCenterDescription,
+            t.gd_zbhrq propertyDate,
+            t.gd_pdzt state
+        from  uf_gdzcpdb_dt1 t
+        left join uf_gdzcpdb tt on tt.id=t.mainid
+         where t.gd_cbzx = #{costCenter}
+    </select>
+
+    <select id="primary_getPropertyInfoById" parameterType="java.lang.String" resultType="com.server.pojo.PropertyInfo">
+        select t.id id,
+               t.gd_gs company,
+               t.gd_lbms stateDescription,
+               t.gd_zcbh propertyId,
+               t.gd_zcms propertyName,
+               t.gd_xh modelType,
+               t.gd_dw units,
+               t.gd_cbzx costCenter,
+               t.gd_zbhrq propertyDate,
+               t.gd_gysmc kunnrName,
+               t.gd_pdzt state,
+               t.gd_zcsl num,
+               t.GD_PDSL pnum,
+               t.gd_zrr  personInCharge,
+               t.gd_cfdz address,
+               t.GD_BZ mark,
+               t.GD_TP picUrl
+          from uf_gdzcpdb_dt1 t
+         where t.id = #{id}
+    </select>
+
+    <select id="primary_getPropertyInfoByPropertyId" parameterType="com.server.pojo.PropertyInfo"
+            resultType="com.server.pojo.PropertyInfo">
+        select t.id       id,
+               t.gd_gs    company,
+               t.gd_lbms  stateDescription,
+               t.gd_zcbh  propertyId,
+               t.gd_zcms  propertyName,
+               t.gd_xh    modelType,
+               t.gd_dw    units,
+               t.gd_cbzx  costCenter,
+               t.gd_zbhrq propertyDate,
+               t.gd_gysmc kunnrName,
+               t.gd_pdzt  state,
+               t.gd_zcsl  num,
+               t.gd_zrr   personInCharge,
+               t.gd_cfdz  address
+          from uf_gdzcpdb_dt1 t
+         left join uf_bmzcgly u on t.gd_cbzx=u.gd_cbzx
+         where t.gd_zcbh = #{propertyId} and u.jobnumber=#{jobnumber}
+    </select>
+
+
+    <select id="primary_getPropertyInfoTotalById" parameterType="java.lang.String"
+            resultType="com.server.pojo.PropertyInfo">
+        select t.id id,
+               t.gd_cbzxbm costCenter
+          from uf_gdzcpdb t
+         where t.id = #{id}
+    </select>
+
+    <update id="primary_updatePropertyInfoById" parameterType="com.server.pojo.PropertyInfo">
+        update uf_gdzcpdb_dt1 t
+        set t.gd_pdsl=#{pnum},t.gd_zrr=#{personInCharge},t.gd_cfdz=#{address},t.gd_bz=#{mark},t.gd_sfxz=#{leaveUnused},
+            t.gd_pdzt='Y'
+        where t.id=#{id}
+    </update>
+
+    <update id="primary_updatePropertyInfoById4pic" parameterType="com.server.pojo.PropertyInfo">
+        update uf_gdzcpdb_dt1 t
+        set t.gd_tp = #{picUrl}
+        where t.id=#{id}
+    </update>
+
+</mapper>

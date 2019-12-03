@@ -1,0 +1,10 @@
+#For tests only !
+#Tue Dec 03 16:05:30 CST 2019
+jco.client.lang=en
+jco.destination.peak_limit=150
+jco.client.client=800
+jco.client.passwd=xpp2@12
+jco.client.sysnr=00
+jco.client.user=abaprfc
+jco.destination.pool_capacity=30
+jco.client.ashost=192.168.0.12

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>资产详情</title>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet" th:href="@{/css/bootstrap.min.css?v=3.3.6}">
+    <!--<link href="/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">-->
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet" th:href="@{/css/plugins/toastr/toastr.min.css}">
+    <link href="/css/animate.css" rel="stylesheet" th:href="@{/css/animate.css}">
+    <!--<link href="/css/style.css?v=4.1.0" rel="stylesheet" th:href="@{/css/style.css?v=4.1.0}">-->
+    <style>
+        .fileinput-button {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .fileinput-button input{
+            position:absolute;
+            right: 0px;
+            top: 0px;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            font-size: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <!--资产信息-->
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <label>资产编号:<span id="propertyId" th:text="${propertyInfo.propertyId}"></span></label>
+                        <span class="label label-warning" th:if="${propertyInfo.state=='Y'}">已盘</span>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="caption" align="center">
+                        <img style="width: 50%; height: 50%" th:src="${propertyInfo.picUrl}">
+                    </div>
+                    <div class="caption">
+                        <label>资产名称:<span id="propertyName" th:text="${propertyInfo.propertyName}"></span></label>
+                    </div>
+                    <div class="caption" style="padding-top: 20px">
+                        <label>类别描述:<span id="stateDescription" th:text="${propertyInfo.stateDescription}"></span></label>
+                    </div>
+                    <div class="caption" style="padding-top: 20px">
+                        <label>公司:<span id="company" th:text="${propertyInfo.company}"></span></label>
+                    </div>
+                    <div class="caption" style="padding-top: 20px">
+                        <label>型号:<span id="modelType" th:text="${propertyInfo.modelType}"></span></label>
+                    </div>
+                    <div class="caption" style="padding-top: 20px">
+                        <label>单位:<span id="units" th:text="${propertyInfo.units}"></span></label>
+                    </div>
+                    <div class="caption" style="padding-top: 20px">
+                        <label>数量:<span id="num" th:text="${propertyInfo.num}"></span></label>
+                    </div>
+                    <div class="caption" style="padding-top: 20px">
+                        <label>成本中心描述:<span id="costCenterDescription"
+                                            th:text="${propertyInfo.costCenter}"></span></label>
+                    </div>
+                    <div class="caption" style="padding-top: 20px">
+                        <label>资本化日期:<span id="propertyDate" th:text="${propertyInfo.propertyDate}"></span></label>
+                    </div>
+                    <div class="caption" style="padding-top: 20px">
+                        <label>供应商名称:<span id="kunnrName" th:text="${propertyInfo.kunnrName}"></span></label>
+                    </div>
+                </div>
+            </div>
+            <!--资产修改信息-->
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">修改信息</h3>
+                </div>
+                <form id="submitData">
+                    <input id="id" name="id" type="hidden" class="form-control" th:value="${propertyInfo.id}">
+                    <div class="panel-body">
+                        <div class="input-group">
+                            <span class="input-group-addon">盘点数量:</span>
+                            <input id="pnum" name="pnum" class="form-control" type="number" th:value="${propertyInfo.pnum}">
+                        </div>
+                        <div class="input-group" style="padding-top: 20px">
+                            <span class="input-group-addon">责任人:</span>
+                            <input id="personInCharge" name="personInCharge" class="form-control" type="text" th:value="${propertyInfo.personInCharge}">
+                        </div>
+                        <div class="input-group" style="padding-top: 20px">
+                            <span class="input-group-addon">存放地址:</span>
+                            <input id="address" name="address" class="form-control" type="text" th:value="${propertyInfo.address}">
+                        </div>
+                        <div class="input-group" style="padding-top: 20px">
+                            <span class="input-group-addon">备注:</span>
+                            <input id="mark" name="mark" class="form-control" type="text" th:value="${propertyInfo.mark}">
+                        </div>
+                        <div class="input-group" style="padding-top: 20px">
+                            <span class="input-group-addon">是否闲置:</span>
+                            <select id="leaveUnused" name="leaveUnused" class="form-control">
+                                <option value="Y">是</option>
+                                <option value="N">否</option>>
+                            </select>
+                        </div>
+                        <div class="caption" style="padding-top: 20px">
+                            <span class="btn btn-success fileinput-button">
+                                <span><span class="glyphicon glyphicon-plus"></span>上传图片</span>
+                                <input accept="image/*"  type="file" id="uploadIMG"  onchange="btnUploadFile(event)"/>
+                            </span>
+                        </div>
+                        <div class="caption" style="padding-top: 20px">
+                            <button type="button" class="btn btn-primary btn-lg btn-block" onclick="submitData()">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6" th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
+<script src="/js/plugins/bootstrap-table/bootstrap-table.min.js" th:src="@{/js/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
+<script src="/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js" th:src="@{/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+<script src="/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" th:src="@{/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+<script src="/js/plugins/validate/jquery.validate.min.js" th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
+<script src="/js/plugins/layer/layer.js" th:src="@{/js/plugins/layer/layer.js}"></script>
+<script src="/js/content.js?v=1.0.0" th:src="@{/js/content.js?v=1.0.0}"></script>
+<script type="text/javascript" src="/js/appjs/data/propertyInfo.js" th:src="@{/js/appjs/data/propertyInfo.js}"></script>
+</body>
+</html>

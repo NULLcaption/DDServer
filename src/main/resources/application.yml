@@ -1,0 +1,69 @@
+server:
+  context-path : /dd
+  session-timeout: 1800
+  port: 8101
+logging:
+  level:
+    root: info
+    com.core: debug
+    com.server: debug
+    HTTP_INVOKE_LOGGER: WARN
+    DING_OPEN_CLIENT_SDK_LOGGER: WARN
+spring:
+  http:
+    multipart:
+      maxFileSize : 10Mb
+      maxRequestSize : 100Mb
+  thymeleaf:
+    mode: LEGACYHTML5
+    cache: false
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  datasource:
+    # 主数据源
+    primary:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driverClassName: oracle.jdbc.OracleDriver
+      url: jdbc:oracle:thin:oradba/ora123456@10.100.0.13:1521:ecologyPRD
+      username: oradba
+      password: ora123456
+    # 辅数据源
+    secondary:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://10.100.0.5:4706/ewechat?useUnicode=true&characterEncoding=utf8
+      username: root
+      password: Wewechat
+    resources:
+          static-locations: classpath:/,classpath:/static,classpath:/public,classpath:/resources,classpath:/META-INF/resources
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mybatis/**/*.xml
+  typeAliasesPackage: com.server.pojo
+
+#SAP测试机连接配置
+#jco :
+#  client :
+#    ashost : 192.168.0.16
+#    client : 700
+#    user : RFC
+#    passwd : poiuyt
+
+#SAP正式机连接配置
+jco :
+  client :
+    ashost : 192.168.0.12
+    client : 800
+    user : abaprfc
+    passwd : xpp2@12
+
+# 文件上传路径
+dd:
+#  正式机路径
+  uploadPath: /var/uploaded_files/
+  imagePath: file:///var/uploaded_files/dd/
+#  测试机路径
+#  uploadPath: D:/var/uploaded_files/
+#  imagePath: file:///D:/var/uploaded_files/dd/

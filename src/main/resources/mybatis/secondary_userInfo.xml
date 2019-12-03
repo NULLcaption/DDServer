@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.server.mapper.UserSecondMapper">
+
+    <select id="secondary_getUserInfoByLoginId" resultType="com.server.pojo.UserInfoDo" parameterType="java.lang.String">
+        SELECT
+            b.wxuserid AS userid,
+            b. NAME AS NAME,
+            b.jobnumber AS jobnumber,
+            a.outsysuserid AS outsysuserid
+        FROM
+          wx_cp_user_account a
+        JOIN wx_cp_userinfo b ON a.userid = b.id
+        WHERE
+          b.jobnumber =#{loginId}
+    </select>
+
+</mapper>

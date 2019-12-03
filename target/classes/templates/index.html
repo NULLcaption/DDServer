@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="wpk-bid" content="dta_1_262106545">
+    <script>    !(function (c, i, e, b) {
+        var h = i.createElement("script");
+        var f = i.getElementsByTagName("script")[0];
+        h.type = "text/javascript";
+        h.crossorigin = true;
+        h.onload = function () {
+            c[b] || (c[b] = new c.wpkReporter({bid: "dta_1_262106545"}));
+            c[b].installAll()
+        };
+        f.parentNode.insertBefore(h, f);
+        h.src = e
+    })(window, document, "https://g.alicdn.com/woodpeckerx/jssdk??wpkReporter.js", "__wpk");</script>
+    <title>固定资产盘点</title>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet" th:href="@{/css/bootstrap.min.css?v=3.3.6}">
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet" th:href="@{/css/plugins/toastr/toastr.min.css}">
+    <link href="/css/animate.css" rel="stylesheet" th:href="@{/css/animate.css}">
+</head>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <!--扫码搜索按按钮-->
+            <div class="panel panel-default">
+                <div class="input-group">
+                    <input type="text" id="data" name="data" class="form-control">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" onclick="searchData()">搜索</button>
+                    </span>
+                </div>
+                <div class="caption" style="padding-top: 5px">
+                    <button type="button" class="btn btn-primary btn-lg btn-block"
+                            onclick="scanCode()">扫描资产条码
+                    </button>
+                </div>
+            </div>
+            <!--盘点总单列表-->
+            <div class="panel panel-warning" th:each="propertyDo,index:${propertyList}">
+                <input id="id" type="hidden" th:value="${propertyDo.id}" th:data-index="${index.index}">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <label><span th:text="${propertyDo.propertyName}"></span></label>
+                        <span class="label label-warning" th:if="${propertyDo.state=='Y'}">已盘</span>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                   <!-- <div class="caption">
+                        <label>资产名称:
+                            <span id="propertyName" th:text="${propertyDo.propertyName}"></span>
+                        </label>
+                    </div>-->
+                    <div class="caption" style="padding-top: 20px">
+                        <label>资产条码:<span id="propertyId" th:text="${propertyDo.propertyId}"></span></label>
+                    </div>
+                    <div class="caption" style="padding-top: 20px">
+                        <label>成本中心:<span id="propertyDate" th:text="${propertyDo.costCenter}"></span></label>
+                    </div>
+                    <div class="caption" style="padding-top: 20px">
+                        <label>资本化日期:<span id="costCenterDescription"
+                                           th:text="${propertyDo.propertyDate}"></span></label>
+                    </div>
+                    <div class="caption" style="padding-top: 20px">
+                        <button type="button" class="btn btn-primary btn-lg btn-block"
+                                th:onclick="'javascript:propertyInfo(\''+${propertyDo.id}+'\')'">资产详情
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script src="/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+<script type="text/javascript" src="http://g.alicdn.com/dingding/open-develop/1.6.9/dingtalk.js"></script>
+<script type="text/javascript" src="/js/appjs/data/index.js" th:src="@{/js/appjs/data/index.js}"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ssl.zjxpp.com.jks" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/css/bootstrap-datetimepicker-standalone.css" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/css/bootstrap-datetimepicker.css" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/css/bootstrap-datetimepicker.min.css" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/img/banner.jpg" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/js/bootstrap-datetimepicker.min.js" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/js/moment-with-locales.min.js" charset="GBK" />
+  </component>
+</project>
