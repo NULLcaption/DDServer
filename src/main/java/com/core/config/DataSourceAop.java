@@ -1,5 +1,6 @@
 package com.core.config;
 
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
@@ -20,13 +21,26 @@ public class DataSourceAop {
 
     @Before("execution(* com.server.service.impl..*.primary*(..))")
     public void setDataSource2Primary() {
-        logger.debug("主数据库业务");
+        logger.debug("Primary data source--OA");
         DataSourceType.setDataBaseType(DataSourceType.DataBaseType.PRIMARY);
     }
 
     @Before("execution(* com.server.service.impl..*.secondary*(..))")
     public void setDataSource2Secondary() {
-        logger.debug("辅数据库业务");
+        logger.debug("Secondary data source--weChatData");
         DataSourceType.setDataBaseType(DataSourceType.DataBaseType.SECONDARY);
     }
+
+    @Before("execution(* com.server.service.impl..*.thirdly*(..))")
+    public  void setDataSource3Thirdly(){
+        logger.debug("Thirdly data source--EXP");
+        DataSourceType.setDataBaseType(DataSourceType.DataBaseType.THIRDLY);
+    }
+
+    @After("execution(* com.server.service.impl..*.*(..))")
+    public void clearDataSource(){
+        logger.debug("connection done.clear data source.....");
+        DataSourceType.cleartDataBaseType();
+    }
+
 }

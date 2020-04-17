@@ -1,15 +1,11 @@
 package com.server.service.impl;
 
-import com.alibaba.fastjson.parser.SymbolTable;
-import com.core.util.SAPConnectionPool;
 import com.sap.conn.jco.*;
 import com.server.mapper.UserMapper;
 import com.server.mapper.UserSecondMapper;
-import com.server.pojo.DeptAdmin;
-import com.server.pojo.PropertyInfo;
-import com.server.pojo.UserInfoDo;
+import com.server.mapper.UserThirdlyMapper;
+import com.server.pojo.*;
 import com.server.service.UserService;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +33,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserSecondMapper userSecondMapper;
+
+    @Autowired
+    private UserThirdlyMapper userThirdlyMapper;
 
     @Override
     public UserInfoDo primary_getUserInfoByLoginId(String loginId) {
@@ -69,7 +68,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public DeptAdmin primary_getDeptAdminByJobnumber(String jobnumber) {
+    public List<DeptAdmin> primary_getDeptAdminByJobnumber(String jobnumber) {
         try {
             return userMapper.primary_getDeptAdminByJobnumber(jobnumber);
         } catch (Exception e) {
@@ -143,7 +142,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public DeptAdmin primary_getDeptAdminByCostCen(String costCenter) {
+    public List<DeptAdmin> primary_getDeptAdminByCostCen(String costCenter) {
         try {
             return userMapper.primary_getDeptAdminByCostCen(costCenter);
         } catch (Exception e) {
@@ -167,6 +166,107 @@ public class UserServiceImpl implements UserService {
         try {
             userMapper.primary_updatePropertyInfoById4pic(propertyInfo);
             return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public PropertyInfo primary_getPropertyInfoByPropertyIdHZ(PropertyInfo propertyInfo) {
+        try {
+            return userMapper.primary_getPropertyInfoByPropertyIdHZ(propertyInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<PropertyInfo> primary_getPropertyInfoListHZ(PropertyInfo propertyInfo) {
+        try {
+            return userMapper.primary_getPropertyInfoListHZ(propertyInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public PropertyInfo primary_getPropertyInfoCountNum(String costCenter) {
+        try {
+            return userMapper.primary_getPropertyInfoCountNum(costCenter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public UserInfoDo secondary_getUserInfoByUserId(String userid) {
+        try {
+            return userSecondMapper.secondary_getUserInfoByUserId(userid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public QualityCheckingDo thirdly_getQualityChecking(String batchNumber) {
+        try {
+            return userThirdlyMapper.thirdly_getQualityChecking(batchNumber);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public DeptAdmin primary_getDeptAdminByOutUserId(String outuserid) {
+        try {
+            return userMapper.primary_getDeptAdminByOutUserId(outuserid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public int primary_createExpressIndfo4DD(ExpressDo expressDo) {
+        try {
+            userMapper.primary_createExpressIndfo4DD(expressDo);
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public List<ExpressDo> primary_getExpressInfoByUserId(String outuserid) {
+        try {
+            return userMapper.primary_getExpressInfoByUserId(outuserid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public ExpressDo primary_getExpressInfoById(String id) {
+        try {
+            return userMapper.primary_getExpressInfoById(Integer.parseInt(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public int primary_getExpressInfoId() {
+        try {
+            return userMapper.primary_getExpressInfoId();
         } catch (Exception e) {
             e.printStackTrace();
         }

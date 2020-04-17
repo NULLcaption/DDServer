@@ -1,8 +1,6 @@
 package com.server.service;
 
-import com.server.pojo.DeptAdmin;
-import com.server.pojo.PropertyInfo;
-import com.server.pojo.UserInfoDo;
+import com.server.pojo.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +19,7 @@ public interface UserService {
 
     List<UserInfoDo> primary_getUserInfoList(String deptId);
 
-    DeptAdmin primary_getDeptAdminByJobnumber(String jobnumber);
+    List<DeptAdmin> primary_getDeptAdminByJobnumber(String jobnumber);
 
     List<PropertyInfo> primary_getPropertyList(String costCenter);
 
@@ -31,9 +29,29 @@ public interface UserService {
 
     PropertyInfo primary_getPropertyInfoTotalById(String id);
 
-    DeptAdmin primary_getDeptAdminByCostCen(String costCenter);
+    List<DeptAdmin> primary_getDeptAdminByCostCen(String costCenter);
 
     PropertyInfo primary_getPropertyInfoByPropertyId(PropertyInfo propertyInfo);
 
     int primary_updatePropertyInfoById4pic(PropertyInfo propertyInfo);
+
+    PropertyInfo primary_getPropertyInfoByPropertyIdHZ(PropertyInfo propertyInfo);
+
+    List<PropertyInfo> primary_getPropertyInfoListHZ(PropertyInfo propertyInfo);
+
+    PropertyInfo primary_getPropertyInfoCountNum(String costCenter);
+
+    UserInfoDo secondary_getUserInfoByUserId(String userid);
+
+    QualityCheckingDo thirdly_getQualityChecking(String batchNumber);
+
+    DeptAdmin primary_getDeptAdminByOutUserId(String outuserid);
+
+    int primary_createExpressIndfo4DD(ExpressDo expressDo);
+
+    List<ExpressDo> primary_getExpressInfoByUserId(String outuserid);
+
+    ExpressDo primary_getExpressInfoById(String id);
+
+    int primary_getExpressInfoId();
 }

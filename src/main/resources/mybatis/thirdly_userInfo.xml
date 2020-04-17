@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.server.mapper.UserThirdlyMapper">
+
+    <select id="thirdly_getQualityChecking" resultType="com.server.pojo.QualityCheckingDo" parameterType="java.lang.String">
+        select distinct t.id                    id,
+                        t.quality_checking_id   qualityCheckingId,
+                        t.batch_number          batchNumber,
+                        t.date_of_manufacture   dateOfManufacture,
+                        t.date_of_manufacture1  dateOfManufacture1,
+                        t.production_time_start productionTimeStart,
+                        t.production_time_end   productionTimeEnd,
+                        t.materiel_id           materielId,
+                        t.quality_checking      qualityChecking,
+                        m.maktx                 materielName
+          from crm.crm_tb_quality_checking t
+          left join office.office_tb_materiel m on t.materiel_id = m.matnr
+         where 1 = 1 and t.batch_number = #{batchNumber}
+    </select>
+
+</mapper>

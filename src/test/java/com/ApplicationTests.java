@@ -3,6 +3,7 @@ package com;
 import com.core.config.Constant;
 import com.core.util.AccessTokenUtil;
 import com.server.pojo.PropertyInfo;
+import com.server.pojo.QualityCheckingDo;
 import com.server.pojo.UserInfoDo;
 import com.server.service.UserService;
 import org.junit.Test;
@@ -19,6 +20,15 @@ public class ApplicationTests {
 
     @Autowired
     UserService userService;
+
+    @Test
+    public void getUserInfoEXP(){
+        String batchNumber = "HL20031805";
+        QualityCheckingDo qualityCheckingDo = userService.thirdly_getQualityChecking(batchNumber);
+        System.out.println("[thirdly user info data] :qualityCheckingId=" + qualityCheckingDo.getQualityCheckingId() +
+                " ; batchNumber=" + qualityCheckingDo.getBatchNumber() +
+                "; materielId=" + qualityCheckingDo.getMaterielId());
+    }
 
     @Test
     public void getUserInfoList() {
@@ -56,7 +66,7 @@ public class ApplicationTests {
         String name = userInfoDo.getName();
         String outsysuserid = userInfoDo.getOutsysuserid();
 
-        System.out.println("[primary user info data] :userId=" + id + " ; name=" + name + "; outsysuserid=" + outsysuserid);
+        System.out.println("[secondary user info data] :userId=" + id + " ; name=" + name + "; outsysuserid=" + outsysuserid);
 
     }
 

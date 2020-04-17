@@ -13,4 +13,6 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface UserSecondMapper {
     UserInfoDo secondary_getUserInfoByLoginId(String loginId);
+
+    UserInfoDo secondary_getUserInfoByUserId(String userid);
 }

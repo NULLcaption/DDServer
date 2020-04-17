@@ -1,12 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>错误信息</title>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
     <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet" th:href="@{/css/bootstrap.min.css?v=3.3.6}">
-    <link href="/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <!--<link href="/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">-->
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet" th:href="@{/css/plugins/toastr/toastr.min.css}">
+    <link href="/css/animate.css" rel="stylesheet" th:href="@{/css/animate.css}">
+    <!--<link href="/css/style.css?v=4.1.0" rel="stylesheet" th:href="@{/css/style.css?v=4.1.0}">-->
+    <style>
+        .fileinput-button {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .fileinput-button input{
+            position:absolute;
+            right: 0px;
+            top: 0px;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            font-size: 200px;
+        }
+    </style>
 </head>
-<body>
-    <div class="alert alert-warning">警告：服务正在忙，请稍后重试。。。</div>
+<body class="container">
+    <div class="row clearfix">
+        <div class="alert alert-warning">警告：网络错误，稍后重试。。。</div>
+    </div>
 </body>
 </html>

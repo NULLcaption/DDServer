@@ -1,6 +1,7 @@
 package com.server.controller;
 
 import com.core.config.URLConstant;
+import com.core.util.EncryptUtil;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiUserGetRequest;
@@ -10,10 +11,12 @@ import com.dingtalk.api.response.OapiUserGetuserinfoResponse;
 import com.taobao.api.ApiException;
 import com.core.util.AccessTokenUtil;
 import com.core.util.ServiceResult;
+import org.apache.http.HttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +27,7 @@ import java.util.Map;
  **/
 @RestController
 public class IndexController {
-    private static final Logger bizLogger = LoggerFactory.getLogger(IndexController.class);
+    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     /**
      * 欢迎页面,通过url访问，判断后端服务是否启动
@@ -32,6 +35,27 @@ public class IndexController {
     @RequestMapping(value = "/welcome", method = RequestMethod.GET)
     public String welcome() {
         return "index";
+    }
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String test() {
+        String data = "2020/03/25-2020/03/26:上海,2020/03/26-2020/03/27:湖州,2020/03/27-2020/03/28:杭州";
+        String key = "8B145089E1223415";
+        String encrypt = EncryptUtil.encrypt(data, key);
+        encrypt = EncryptUtil.replaceBlank(encrypt);
+        logger.debug("加密前：" + data);
+        logger.debug("加密后：" + encrypt);
+        String desEncrypt = EncryptUtil.desEncrypt(encrypt, key);
+        logger.debug("解密后：" + desEncrypt);
+        return encrypt;
+    }
+
+    @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
+    @ResponseBody
+    public String getUserInfo(HttpServletRequest request){
+        String userid = request.getParameter("userid");
+        System.out.print("userticket:"+userid);
+        return "getUserInfo";
     }
 
     /**

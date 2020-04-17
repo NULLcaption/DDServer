@@ -8,15 +8,17 @@ function propertyInfo(id) {
  * 扫描资产条码
  * */
 function scanCode () {
-    dd.biz.util.scan({
-        type: 'all',
-        onSuccess: function(data) {
-            var propertyId = data.text;
-            window.location.href = "/dd/scanInfo?propertyId="+propertyId;
-        },
-        onFail: function(){
-            console.log("扫码失败");
-        }
+    dd.ready(function () {
+        dd.biz.util.scan({
+            type: 'all',
+            onSuccess: function(data) {
+                var propertyId = data.text;
+                window.location.href = "/dd/scanInfo?propertyId="+propertyId;
+            },
+            onFail: function(){
+                console.log("扫码失败");
+            }
+        });
     })
 }
 /**

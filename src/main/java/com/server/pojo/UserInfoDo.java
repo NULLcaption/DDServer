@@ -30,6 +30,9 @@ public class UserInfoDo implements Serializable{
     public boolean isBoss;
     public String dingId;
     public String outsysuserid;
+    public String outuserid;
+    private String orgId;
+    private String orgName;
 
     public UserInfoDo() {
     }
@@ -37,6 +40,30 @@ public class UserInfoDo implements Serializable{
     public UserInfoDo(String userid, String name) {
         this.userid = userid;
         this.name = name;
+    }
+
+    public String getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public String getOutuserid() {
+        return outuserid;
+    }
+
+    public void setOutuserid(String outuserid) {
+        this.outuserid = outuserid;
     }
 
     public String getOutsysuserid() {

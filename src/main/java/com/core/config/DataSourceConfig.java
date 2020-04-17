@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
+import javax.xml.crypto.Data;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ import java.util.Map;
 public class DataSourceConfig {
 
     /**
-     * @Description 主数据源
+     * @Description 主数据源 OA
      * @Author xg.chen
      * @Date 14:26 2019/5/15
      **/
@@ -41,7 +42,7 @@ public class DataSourceConfig {
     }
 
     /**
-     * @Description 辅数据源
+     * @Description 辅数据源 云桥
      * @Author xg.chen
      * @Date 14:28 2019/5/15
      **/
@@ -53,16 +54,30 @@ public class DataSourceConfig {
     }
 
     /**
+     * @Description 辅数据源 EXP
+     * @Author xg.chen
+     * @Date 9:21 2020/3/19
+     **/
+    @Bean(name = "thirdlyDataSource")
+    @Qualifier("thirdlyDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.thirdly")
+    public DataSource thirdlyDataSource(){
+        return DataSourceBuilder.create().build();
+    }
+
+    /**
      * @Description 动态切换数据源
      * @Author xg.chen
      * @Date 16:04 2019/5/15
      **/
     @Bean(name = "dynamicDataSource")
     public DynamicDataSource DataScource(@Qualifier("primaryDataSource") DataSource primaryDataSource,
-                                         @Qualifier("secondaryDataSource") DataSource secondaryDataSource) {
+                                         @Qualifier("secondaryDataSource") DataSource secondaryDataSource,
+                                         @Qualifier("thirdlyDataSource")DataSource thirdlyDataSource) {
         Map<Object,Object> targetDataSource = new HashMap<>();
         targetDataSource.put(DataSourceType.DataBaseType.PRIMARY, primaryDataSource);
         targetDataSource.put(DataSourceType.DataBaseType.SECONDARY, secondaryDataSource);
+        targetDataSource.put(DataSourceType.DataBaseType.THIRDLY, thirdlyDataSource);
         DynamicDataSource dataSource = new DynamicDataSource();
         dataSource.setTargetDataSources(targetDataSource);
         dataSource.setDefaultTargetDataSource(primaryDataSource);

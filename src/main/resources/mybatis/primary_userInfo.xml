@@ -58,6 +58,7 @@
                t.gd_xh modelType,
                t.gd_dw units,
                t.gd_cbzx costCenter,
+               t.gd_cbzxms costCenterDescription,
                t.gd_zbhrq propertyDate,
                t.gd_gysmc kunnrName,
                t.gd_pdzt state,
@@ -88,8 +89,27 @@
                t.gd_zrr   personInCharge,
                t.gd_cfdz  address
           from uf_gdzcpdb_dt1 t
-         left join uf_bmzcgly u on t.gd_cbzx=u.gd_cbzx
-         where t.gd_zcbh = #{propertyId} and u.jobnumber=#{jobnumber}
+         where t.gd_zcbh = #{propertyId} and t.gd_gs=#{company}
+    </select>
+
+    <select id="primary_getPropertyInfoByPropertyIdHZ" parameterType="com.server.pojo.PropertyInfo"
+            resultType="com.server.pojo.PropertyInfo">
+        select t.id       id,
+        t.gd_gs    company,
+        t.gd_lbms  stateDescription,
+        t.gd_zcbh  propertyId,
+        t.gd_zcms  propertyName,
+        t.gd_xh    modelType,
+        t.gd_dw    units,
+        t.gd_cbzx  costCenter,
+        t.gd_zbhrq propertyDate,
+        t.gd_gysmc kunnrName,
+        t.gd_pdzt  state,
+        t.gd_zcsl  num,
+        t.gd_zrr   personInCharge,
+        t.gd_cfdz  address
+        from uf_gdzcpdb_dt1 t
+        where t.gd_zcbh = #{propertyId}
     </select>
 
 
@@ -104,7 +124,7 @@
     <update id="primary_updatePropertyInfoById" parameterType="com.server.pojo.PropertyInfo">
         update uf_gdzcpdb_dt1 t
         set t.gd_pdsl=#{pnum},t.gd_zrr=#{personInCharge},t.gd_cfdz=#{address},t.gd_bz=#{mark},t.gd_sfxz=#{leaveUnused},
-            t.gd_pdzt='Y'
+            t.gd_pdzt='Y',t.gd_pdzh=#{jobnumber}
         where t.id=#{id}
     </update>
 
@@ -114,4 +134,119 @@
         where t.id=#{id}
     </update>
 
+    <select id="primary_getPropertyInfoListHZ" parameterType="com.server.pojo.PropertyInfo"
+            resultType="com.server.pojo.PropertyInfo">
+        select  t.id       id,
+                t.gd_gs    company,
+                t.gd_lbms  stateDescription,
+                t.gd_zcbh  propertyId,
+                t.gd_zcms  propertyName,
+                t.gd_xh    modelType,
+                t.gd_dw    units,
+                t.gd_cbzx  costCenter,
+                t.gd_cbzxms costCenterDescription,
+                t.gd_zbhrq propertyDate,
+                t.gd_gysmc kunnrName,
+                t.gd_pdzt  state,
+                t.gd_zcsl  num,
+                t.gd_zrr   personInCharge,
+                t.gd_cfdz  address
+        from uf_gdzcpdb_dt1 t
+        where t.gd_zcbh = #{propertyId}
+    </select>
+
+     <select id="primary_getPropertyInfoCountNum" parameterType="com.server.pojo.PropertyInfo"
+             resultType="com.server.pojo.PropertyInfo">
+         select t.gd_cbzx costCenter,
+               max(t.gd_cbzxms) costCenterDescription,
+               max(nvl(t1.countPNum,0)) countPNum,
+               max(nvl(t2.countWPNUm,0)) countWPNUm,
+               max(nvl(t3.countYPNum,0)) countYPNum
+            from uf_gdzcpdb_dt1 t
+            left join (select count(t.id) countPNum, t.gd_cbzx
+                       from uf_gdzcpdb_dt1 t
+                      where t.gd_cbzx = #{costCenter}
+                      group by t.gd_cbzx) t1 on t.gd_cbzx = t1.gd_cbzx
+            left join (select count(t.id) countWPNUm, t.gd_cbzx
+                       from uf_gdzcpdb_dt1 t
+                      where t.gd_cbzx = #{costCenter}
+                        and t.gd_pdzt is null
+                      group by t.gd_cbzx) t2 on t.gd_cbzx = t2.gd_cbzx
+            left join (select count(t.id) countYPNum, t.gd_cbzx
+                       from uf_gdzcpdb_dt1 t
+                      where t.gd_cbzx = #{costCenter}
+                        and t.gd_pdzt is not null
+                      group by t.gd_cbzx) t3 on t.gd_cbzx = t3.gd_cbzx
+            where t.gd_cbzx = #{costCenter}
+            group by t.gd_cbzx
+     </select>
+
+    <select id="primary_getDeptAdminByOutUserId" parameterType="java.lang.String" resultType="com.server.pojo.DeptAdmin">
+        select d.id orgId,
+               d.departmentname orgname
+        from hrmresource t
+        left join hrmdepartment d on t.departmentid=d.id
+        where t.id = #{outuserid}
+    </select>
+
+    <insert id="primary_createExpressIndfo4DD" parameterType="com.server.pojo.ExpressDo">
+        INSERT INTO uf_kddj (
+            kdgs,
+            kddh,
+            jjr,
+            bm,
+            djjr,
+            fygs,
+            sm,
+            lrlx,
+            djrq,
+            formmodeid,
+            modedatacreater,
+            modedatacreatertype,
+            modedatacreatedate,
+            modedatacreatetime
+        ) VALUES (
+            #{expressCompany},
+            #{expressNum},
+            #{userId},
+            #{orgId},
+            #{dName},
+            #{costBelonging},
+            #{explain},
+            #{state},
+            TO_CHAR(SYSDATE,'YYYY-MM-DD'),
+            '1241',
+            #{userId},
+            '0',
+            TO_CHAR(SYSDATE,'YYYY-MM-DD'),
+            TO_CHAR(SYSDATE,'hh:mm:ss')
+        )
+    </insert>
+
+    <select id="primary_getExpressInfoByUserId" parameterType="java.lang.String"
+            resultType="com.server.pojo.ExpressDo">
+        SELECT t.id id, t.kdgs expressCompany, t.djrq creatDate, t.kddh expressNum
+          from uf_kddj t
+         where t.jjr = #{outuserid}
+    </select>
+
+    <select id="primary_getExpressInfoById" parameterType="java.lang.Integer"
+            resultType="com.server.pojo.ExpressDo">
+      SELECT t.kdgs expressCompany,
+               t.djrq creatDate,
+               t.kddh expressNum,
+               h.lastname userName,
+               d.departmentname orgname,
+               t.djjr dName,
+               t.fygs costBelonging,
+               t.sm explain
+          from uf_kddj t
+         left join hrmresource h on h.id = t.jjr
+        left join hrmdepartment d on t.bm=d.id
+         where t.id = #{id}
+    </select>
+
+    <select id="primary_getExpressInfoId" resultType="java.lang.Integer">
+        SELECT t.id from uf_kddj t where rownum=1 order by t.id desc
+    </select>
 </mapper>

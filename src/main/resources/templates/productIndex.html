@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>产品追溯</title>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet" th:href="@{/css/bootstrap.min.css?v=3.3.6}">
+    <!--<link href="/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">-->
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet" th:href="@{/css/plugins/toastr/toastr.min.css}">
+    <link href="/css/animate.css" rel="stylesheet" th:href="@{/css/animate.css}">
+    <!--<link href="/css/style.css?v=4.1.0" rel="stylesheet" th:href="@{/css/style.css?v=4.1.0}">-->
+</head>
+<body>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column" style="padding-top: 100px">
+                <form id="signupForm">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">查询人员信息</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="caption" style="padding-top: 20px">
+                                <label>姓名:<span id="name" th:text="${userInfoDo.name}"></span></label>
+                            </div>
+                            <div class="caption" style="padding-top: 20px">
+                                <label>jobnumber:<span id="jobnumber"  th:text="${userInfoDo.jobnumber}"></span></label>
+                            </div>
+                            <div class="caption" style="padding-top: 20px">
+                                <label>职位:<span id="position" th:text="${userInfoDo.position}"></span></label>
+                            </div>
+                            <div class="caption" style="padding-top: 20px">
+                                <label>电话:<span id="mobile" th:text="${userInfoDo.mobile}"></span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-lg btn-block" onclick="seacher(1)">点击进入查询</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6" th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
+<script src="/js/plugins/bootstrap-table/bootstrap-table.min.js" th:src="@{/js/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
+<script src="/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js" th:src="@{/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+<script src="/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" th:src="@{/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+<script src="/js/plugins/validate/jquery.validate.min.js" th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
+<script src="/js/plugins/layer/layer.js" th:src="@{/js/plugins/layer/layer.js}"></script>
+<script src="/js/content.js?v=1.0.0" th:src="@{/js/content.js?v=1.0.0}"></script>
+<script type="text/javascript" src="/js/appjs/data/productIndex.js" th:src="@{/js/appjs/data/productIndex.js}"></script>
+</html>

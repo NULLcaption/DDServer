@@ -148,20 +148,23 @@ public class LoginController {
         //1.根据总表的Id获取总表中成本中心
         PropertyInfo propertyInfo = userService.primary_getPropertyInfoTotalById(id);
         //2.根据获取到的总表的中成本中心去获取维护的管理员信息
-        String loginId = "";
-        if (propertyInfo!=null) {
-            DeptAdmin deptAdmin = userService.primary_getDeptAdminByCostCen(propertyInfo.getCostCenter());
-            if (deptAdmin!=null) {
-                loginId = deptAdmin.getJobnumber();
+        if (propertyInfo != null) {
+            List<DeptAdmin> deptAdminList = userService.primary_getDeptAdminByCostCen(propertyInfo.getCostCenter());
+            if (deptAdminList != null) {
+                for (DeptAdmin deptAdmin : deptAdminList) {
+                    String loginId = deptAdmin.getJobnumber();
+                    if (StringUtils.isNotEmpty(loginId)) {
+                        //3.根据获取到的管理员数据分发到指定的人
+                        UserInfoDo userInfoDo = userService.primary_getUserInfoByLoginId(loginId);
+                        if (userInfoDo != null) {
+                            String string = AccessTokenUtil.sendDDMessage(Constant.AGENT_ID, userInfoDo.getUserid(), Constant.MESSAGE_URL);
+                            logger.debug("[sendDDMessage]:" + string);
+                        }
+                    }
+                }
             } else {
                 return "error";
             }
-        }
-        //3.根据获取到的管理员数据分发到指定的人
-        UserInfoDo userInfoDo = userService.primary_getUserInfoByLoginId(loginId);
-        if (userInfoDo != null) {
-            String string = AccessTokenUtil.sendDDMessage(Constant.AGENT_ID, userInfoDo.getUserid(), Constant.MESSAGE_URL);
-            logger.debug("[sendDDMessage]:" + string);
         }
         return "success";
     }
@@ -169,20 +172,25 @@ public class LoginController {
     /**
      * 资产盘点首页---资产盘点信息列表
      * @param jobnumber
-     * @param modle
+     * @param model
      * @return
      */
     @GetMapping("/loginIndex")
-    public String loginIndex(@PathParam("jobnumber") String jobnumber,Model modle) {
-        //根据userid和jobnumber获取资产盘点信息
+    public String loginIndex(@PathParam("jobnumber") String jobnumber,Model model) {
         //先去泛微的数据判断当前盘点人是否维护
-        DeptAdmin deptAdmin = userService.primary_getDeptAdminByJobnumber(jobnumber);
-        if (deptAdmin == null) {
+        List<DeptAdmin> deptAdminList = userService.primary_getDeptAdminByJobnumber(jobnumber);
+        if (deptAdminList == null) {
             return "error";
         }
-        //如果维护了就根据维护的成本中心获取对应的资产盘点列表
-        List<PropertyInfo> propertyList = userService.primary_getPropertyList(deptAdmin.getCostCenter());
-        modle.addAttribute("propertyList",propertyList);
+        //根据维护的成本中心统计出：盘点总数/未盘数量/已盘数量
+        List<PropertyInfo> propertyList = new ArrayList<>();
+        for (DeptAdmin deptAdmin : deptAdminList) {
+            PropertyInfo propertyInfo = userService.primary_getPropertyInfoCountNum(deptAdmin.getCostCenter());
+            if (propertyInfo != null) {
+                propertyList.add(propertyInfo);
+            }
+        }
+        model.addAttribute("propertyList",propertyList);
         return "index";
     }
 
@@ -194,29 +202,22 @@ public class LoginController {
      */
     @GetMapping("/scanInfo")
     public String scanInfo(@PathParam("propertyId") String propertyId, Model model){
-        //资产条码处理：公司编号+资产编号
-        //取后面7位数
-        String[] strs = propertyId.split("-");
-        if (strs.length==0) {
-            return "error_1";
-        }
-        String propertyId1 = strs[1].toString().trim();
         UserInfoDo userInfoDo = (UserInfoDo) session.getAttribute("userInfo");
-        PropertyInfo propertyInfo = new PropertyInfo();
-        propertyInfo.setJobnumber(userInfoDo.getJobnumber());
-        propertyInfo.setPropertyId("00000"+propertyId1);
-        //获取固定资产明细信息
-        PropertyInfo propertyInfo1 = userService.primary_getPropertyInfoByPropertyId(propertyInfo);
-        //没有获取到数据返回一个错误错误页面
-        if (propertyInfo1 == null) {
+        logger.debug("HZ company====>>:"+userInfoDo.getJobnumber());
+        String strs = propertyId.substring(propertyId.length() - 7, propertyId.length());
+        //截取的长度不够
+        if (strs.length() < 7) {
             return "error_1";
         }
-        //获取到数据则返回动态页面
-        if (StringUtils.isNotEmpty(propertyInfo.getPicUrl())) {
-            propertyInfo1.setPicUrl("/dd/images/"+propertyInfo1.getPicUrl().replace("/files/",""));
+        PropertyInfo propertyInfo = new PropertyInfo();
+        propertyInfo.setPropertyId("00000"+strs);
+        List<PropertyInfo> propertyList = userService.primary_getPropertyInfoListHZ(propertyInfo);
+        //没有获取到数据返回一个错误错误页面
+        if (propertyList == null) {
+            return "error_1";
         }
-        model.addAttribute("propertyInfo",propertyInfo1);
-        return "propertyInfo";
+        model.addAttribute("propertyList",propertyList);
+        return "indexData";
     }
 
     /**
@@ -244,6 +245,8 @@ public class LoginController {
     @PostMapping("/submitData")
     @ResponseBody
     public R submitData(PropertyInfo propertyInfo) {
+        UserInfoDo userInfoDo = (UserInfoDo) session.getAttribute("userInfo");
+        propertyInfo.setJobnumber(userInfoDo.getJobnumber());
         int count = userService.primary_updatePropertyInfoById(propertyInfo);
         if (count == 0) {
             return R.error("数据更新失败：数据出错");

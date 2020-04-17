@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="wpk-bid" content="dta_1_262106545">
+    <title>标准查询</title>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet" th:href="@{/css/bootstrap.min.css?v=3.3.6}">
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet" th:href="@{/css/plugins/toastr/toastr.min.css}">
+    <link href="/css/animate.css" rel="stylesheet" th:href="@{/css/animate.css}">
+</head>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <!--扫码搜索按按钮-->
+            <div class="caption" style="padding-top: 50px">
+                <div class="input-group">
+                    <span class="input-group-addon">生产日期/产地</span>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="caption" style="padding-top: 10px">
+                <div class="input-group">
+                    <span class="input-group-addon">流水码</span>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="caption" style="padding-top: 10px">
+                <button type="button" class="btn btn-primary btn-lg btn-block" onclick="searchData()">查询</button>
+            </div>
+            <div class="caption" style="padding-top: 10px; color:#ffa20d;">
+                <label>
+                    注：此处查询是礼盒装，只支持箱码追溯
+                    生产日期/产地输入格式：20191228H，
+                    流水码输入格式：000001
+                </label>
+            </div>
+            <!--盘点总单列表-->
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <label>送达方</label>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="caption" style="padding-top: 10px">
+                        <label>经销商代码</label><label>经销商名称</label>
+                    </div>
+                    <div class="caption" style="padding-top: 10px">
+                        <label>经销商代码</label><label>经销商名称</label>
+                    </div>
+                    <div class="caption" style="padding-top: 10px">
+                        <label>经销商代码</label><label>经销商名称</label>
+                    </div>
+                    <div class="caption" style="padding-top: 10px">
+                        <label>经销商代码</label><label>经销商名称</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script src="/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+<script type="text/javascript" src="http://g.alicdn.com/dingding/open-develop/1.6.9/dingtalk.js"></script>
+<!--<script type="text/javascript" src="/js/appjs/data/index.js" th:src="@{/js/appjs/data/index.js}"></script>-->
+</body>
+</html>

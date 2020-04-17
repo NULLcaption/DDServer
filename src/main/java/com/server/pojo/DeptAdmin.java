@@ -16,6 +16,24 @@ public class DeptAdmin implements Serializable{
     private String deptAdmin;//部门资产管理员
     private String jobnumber;//钉钉工号
     private String userId;//用户ID
+    private String orgId;
+    private String orgName;
+
+    public String getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
 
     public String getId() {
         return id;

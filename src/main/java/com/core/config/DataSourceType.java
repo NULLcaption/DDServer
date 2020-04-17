@@ -1,5 +1,6 @@
 package com.core.config;
 
+import org.apache.naming.factory.DataSourceLinkFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +15,8 @@ public class DataSourceType {
 
     public enum DataBaseType {
         PRIMARY,
-        SECONDARY
+        SECONDARY,
+        THIRDLY
     }
 
     /**
@@ -33,7 +35,7 @@ public class DataSourceType {
         if (dataBaseType == null) {
             throw new NullPointerException();
         }
-        logger.debug("[当前的数据库为]:" + dataBaseType);
+        logger.debug("[now data source]:" + dataBaseType);
         TYPE.set(dataBaseType);
     }
 
@@ -44,7 +46,7 @@ public class DataSourceType {
     **/
     public static DataBaseType getDataBaseType() {
         DataBaseType dataBaseType = TYPE.get() == null ? DataBaseType.PRIMARY : TYPE.get();
-        logger.debug("[获取到的当前数据库为]:" + dataBaseType);
+        logger.debug("[get now data base type]:" + dataBaseType);
         return dataBaseType;
     }
 

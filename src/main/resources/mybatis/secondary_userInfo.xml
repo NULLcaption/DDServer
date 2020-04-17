@@ -5,7 +5,7 @@
     <select id="secondary_getUserInfoByLoginId" resultType="com.server.pojo.UserInfoDo" parameterType="java.lang.String">
         SELECT
             b.wxuserid AS userid,
-            b. NAME AS NAME,
+            b. NAME AS name,
             b.jobnumber AS jobnumber,
             a.outsysuserid AS outsysuserid
         FROM
@@ -13,6 +13,22 @@
         JOIN wx_cp_userinfo b ON a.userid = b.id
         WHERE
           b.jobnumber =#{loginId}
+    </select>
+
+    <select id="secondary_getUserInfoByUserId" resultType="com.server.pojo.UserInfoDo" parameterType="java.lang.String">
+        SELECT
+            b.wxuserid AS userid,
+	        b. NAME AS name,
+	        b.jobnumber AS jobnumber,
+	        a.outsysuserid AS outsysuserid,
+	        b.mobile AS mobile,
+	        b.post AS position,
+	        a.outuserid AS outuserid
+        FROM
+          wx_cp_user_account a
+        JOIN wx_cp_userinfo b ON a.userid = b.id
+        WHERE
+          b.wxuserid =#{userid}
     </select>
 
 </mapper>

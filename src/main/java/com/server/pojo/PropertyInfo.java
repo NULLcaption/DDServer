@@ -31,7 +31,35 @@ public class PropertyInfo implements Serializable{
     private String leaveUnused;
     private String state;
     private String picUrl;
-    public String jobnumber;
+    private String jobnumber;
+
+    private String countPNum;
+    private String countWPNUm;
+    private String countYPNum;
+
+    public String getCountPNum() {
+        return countPNum;
+    }
+
+    public void setCountPNum(String countPNum) {
+        this.countPNum = countPNum;
+    }
+
+    public String getCountWPNUm() {
+        return countWPNUm;
+    }
+
+    public void setCountWPNUm(String countWPNUm) {
+        this.countWPNUm = countWPNUm;
+    }
+
+    public String getCountYPNum() {
+        return countYPNum;
+    }
+
+    public void setCountYPNum(String countYPNum) {
+        this.countYPNum = countYPNum;
+    }
 
     public String getJobnumber() {
         return jobnumber;

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="wpk-bid" content="dta_1_262106545">
+    <script>    !(function (c, i, e, b) {
+        var h = i.createElement("script");
+        var f = i.getElementsByTagName("script")[0];
+        h.type = "text/javascript";
+        h.crossorigin = true;
+        h.onload = function () {
+            c[b] || (c[b] = new c.wpkReporter({bid: "dta_1_262106545"}));
+            c[b].installAll()
+        };
+        f.parentNode.insertBefore(h, f);
+        h.src = e
+    })(window, document, "https://g.alicdn.com/woodpeckerx/jssdk??wpkReporter.js", "__wpk");</script>
+    <title>快递登记</title>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet" th:href="@{/css/bootstrap.min.css?v=3.3.6}">
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet" th:href="@{/css/plugins/toastr/toastr.min.css}">
+    <link href="/css/animate.css" rel="stylesheet" th:href="@{/css/animate.css}">
+</head>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column" style="padding-top: 10px">
+            <!--运单列表-->
+            <div class="panel panel-default" th:each="expressDo,index:${expressDoList}">
+                <input id="id" name="id" type="hidden" th:value="${expressDo.id}">
+                <div class="panel-body" th:onclick="'javascript:expressDetailInfo(\''+${expressDo.id}+'\')'">
+                    <div class="caption" style="padding-top: 10px">
+                        <label th:text="${expressDo.creatDate}"></label>
+                        <label style="margin-left: 10%" th:text="${expressDo.expressCompany}"></label>
+                        <label style="margin-left: 10%" th:text="${expressDo.expressNum}"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script src="/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+<script type="text/javascript" src="http://g.alicdn.com/dingding/open-develop/1.6.9/dingtalk.js"></script>
+<script type="text/javascript" src="/js/appjs/data/expressTotal.js" th:src="@{/js/appjs/data/expressTotal.js}"></script>
+</body>
+</html>

@@ -66,7 +66,7 @@
                     </div>
                     <div class="caption" style="padding-top: 20px">
                         <label>成本中心描述:<span id="costCenterDescription"
-                                            th:text="${propertyInfo.costCenter}"></span></label>
+                                            th:text="${propertyInfo.costCenterDescription}"></span></label>
                     </div>
                     <div class="caption" style="padding-top: 20px">
                         <label>资本化日期:<span id="propertyDate" th:text="${propertyInfo.propertyDate}"></span></label>
@@ -86,7 +86,7 @@
                     <div class="panel-body">
                         <div class="input-group">
                             <span class="input-group-addon">盘点数量:</span>
-                            <input id="pnum" name="pnum" class="form-control" type="number" th:value="${propertyInfo.pnum}">
+                            <input id="pnum" name="pnum" class="form-control" type="number" th:value="${propertyInfo.num}">
                         </div>
                         <div class="input-group" style="padding-top: 20px">
                             <span class="input-group-addon">责任人:</span>
@@ -103,8 +103,8 @@
                         <div class="input-group" style="padding-top: 20px">
                             <span class="input-group-addon">是否闲置:</span>
                             <select id="leaveUnused" name="leaveUnused" class="form-control">
-                                <option value="Y">是</option>
                                 <option value="N">否</option>>
+                                <option value="Y">是</option>
                             </select>
                         </div>
                         <div class="caption" style="padding-top: 20px">

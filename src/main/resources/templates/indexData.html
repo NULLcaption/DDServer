@@ -29,44 +29,35 @@
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-12 column">
-            <!--扫码搜索按按钮-->
-            <div class="panel panel-default">
-                <div class="input-group">
-                    <input type="text" id="data" name="data" class="form-control">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" onclick="searchData()">搜索</button>
-                    </span>
-                </div>
-                <div class="caption" style="padding-top: 5px">
-                    <button type="button" class="btn btn-primary btn-lg btn-block"
-                            onclick="scanCode()">扫描资产条码
-                    </button>
-                </div>
-            </div>
             <!--盘点总单列表-->
             <div class="panel panel-warning" th:each="propertyDo,index:${propertyList}">
-                <!--<input id="id" type="hidden" th:value="${propertyDo.id}" th:data-index="${index.index}">-->
+                <input id="id" type="hidden" th:value="${propertyDo.id}" th:data-index="${index.index}">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <label>成本中心:<span th:text="${propertyDo.costCenterDescription}"></span></label>
-                        <!--<span class="label label-warning" th:if="${propertyDo.state=='Y'}">已盘</span>-->
+                        <label><span th:text="${propertyDo.propertyName}"></span></label>
+                        <span class="label label-warning" th:if="${propertyDo.state=='Y'}">已盘</span>
                     </h3>
                 </div>
                 <div class="panel-body">
                     <div class="caption" style="padding-top: 20px">
-                        <label>盘点总数:<span id="countPNum" th:text="${propertyDo.countPNum}"></span></label>
+                        <label>资产条码:<span id="propertyId" th:text="${propertyDo.propertyId}"></span></label>
                     </div>
                     <div class="caption" style="padding-top: 20px">
-                        <label>未盘数量:<span id="countWPNUm" th:text="${propertyDo.countWPNUm}"></span></label>
+                        <label>公司:<span id="propertyId" th:text="${propertyDo.company}"></span></label>
                     </div>
                     <div class="caption" style="padding-top: 20px">
-                        <label>已盘数量:<span id="countYPNum" th:text="${propertyDo.countYPNum}"></span></label>
+                        <label>成本中心:<span id="costCenterDescription"
+                                          th:text="${propertyDo.costCenterDescription}"></span></label>
                     </div>
-                    <!--<div class="caption" style="padding-top: 20px">-->
-                        <!--<button type="button" class="btn btn-primary btn-lg btn-block"-->
-                                <!--th:onclick="'javascript:propertyInfo(\''+${propertyDo.id}+'\')'">资产详情-->
-                        <!--</button>-->
-                    <!--</div>-->
+                    <div class="caption" style="padding-top: 20px">
+                        <label>资本化日期:<span id="propertyDate"
+                                           th:text="${propertyDo.propertyDate}"></span></label>
+                    </div>
+                    <div class="caption" style="padding-top: 20px">
+                        <button type="button" class="btn btn-primary btn-lg btn-block"
+                                th:onclick="'javascript:propertyInfo(\''+${propertyDo.id}+'\')'">资产详情
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -75,6 +66,6 @@
 <div th:include="include::footer"></div>
 <script src="/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
 <script type="text/javascript" src="http://g.alicdn.com/dingding/open-develop/1.6.9/dingtalk.js"></script>
-<script type="text/javascript" src="/js/appjs/data/index.js" th:src="@{/js/appjs/data/index.js}"></script>
+<script type="text/javascript" src="/js/appjs/data/index.js" th:src="@{/js/appjs/data/indexData.js}"></script>
 </body>
 </html>

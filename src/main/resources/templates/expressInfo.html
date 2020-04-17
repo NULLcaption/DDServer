@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="wpk-bid" content="dta_1_262106545">
+    <script>    !(function (c, i, e, b) {
+        var h = i.createElement("script");
+        var f = i.getElementsByTagName("script")[0];
+        h.type = "text/javascript";
+        h.crossorigin = true;
+        h.onload = function () {
+            c[b] || (c[b] = new c.wpkReporter({bid: "dta_1_262106545"}));
+            c[b].installAll()
+        };
+        f.parentNode.insertBefore(h, f);
+        h.src = e
+    })(window, document, "https://g.alicdn.com/woodpeckerx/jssdk??wpkReporter.js", "__wpk");</script>
+    <title>快递登记</title>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet" th:href="@{/css/bootstrap.min.css?v=3.3.6}">
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet" th:href="@{/css/plugins/toastr/toastr.min.css}">
+    <link href="/css/animate.css" rel="stylesheet" th:href="@{/css/animate.css}">
+</head>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column" style="padding-top: 10px">
+            <form id="submitData">
+                <!--快递基本信息填写-->
+                <div class="panel panel-default" style="padding-top: 10px">
+                    <div class="input-group" style="padding-top: 10px; margin-left: 10px; margin-right: 10px;">
+                        <span class="input-group-addon">快递公司:</span>
+                        <select id="expressCompany" name="expressCompany" class="form-control">
+                            <option value="">--点击选择--</option>>
+                            <option value="0">顺丰速运</option>
+                            <option value="1">EMS</option>
+                            <option value="2">中国邮政</option>
+                            <option value="3">百世快递</option>
+                            <option value="4">速尔快递</option>
+                        </select>
+                    </div>
+                    <div class="input-group" style="padding-top: 10px; margin-left: 10px; margin-right: 10px;">
+                        <label>输入快递单号:</label>
+                    </div>
+                    <div class="input-group" style=" padding-bottom: 10px; margin-left:10px">
+                        <div class="input-group" style="width: 320px">
+                            <input type="text" id="expressNum" name="expressNum" class="form-control" placeholder="请扫描条形码或手工填写">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" onclick="scanCode()">扫描条形码</button>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+                <!--寄件人基本信息-->
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="caption" style="padding-top: 5px">
+                            <label>寄件人：</label>
+                            <label id="userName" name="userName" th:text="${userInfoDo.name}"></label>
+                        </div>
+                        <div class="caption" style="padding-top: 5px">
+                            <label>寄件部门：</label>
+                            <label id="orgName" name="orgName" th:text="${userInfoDo.orgName}"></label>
+                        </div>
+                        <div class="caption" style="padding-top: 5px">
+                            <div class="input-group">
+                                <span class="input-group-addon">代寄件人:</span>
+                                <input type="text" id="dName" name="dName" class="form-control" placeholder="请填写代寄件人姓名">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--基本费用归属-->
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="input-group">
+                            <span class="input-group-addon">费用归属:</span>
+                            <select id="costBelonging" name="costBelonging" class="form-control">
+                                <option value="0">快递费</option>>
+                                <option value="1">其他费用</option>
+                            </select>
+                        </div>
+                        <div class="caption" style="padding-top: 5px">
+                            <div class="input-group">
+                                <span class="input-group-addon">说明:</span>
+                                <input type="text" id="explain" name="explain" class="form-control" placeholder="请填写寄件说明">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--提交按钮-->
+                <div class="caption" style="padding-top: 20px">
+                    <button type="button" class="btn btn-primary btn-lg btn-block" onclick="submitData()">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script src="/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+<script src="/js/plugins/layer/layer.js" th:src="@{/js/plugins/layer/layer.js}"></script>
+<script type="text/javascript" src="http://g.alicdn.com/dingding/open-develop/1.6.9/dingtalk.js"></script>
+<script type="text/javascript" src="/js/appjs/data/expressInfo.js" th:src="@{/js/appjs/data/expressInfo.js}"></script>
+</body>
+</html>
