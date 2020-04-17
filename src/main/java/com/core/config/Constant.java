@@ -16,7 +16,7 @@ public class Constant {
     /**
      * 开发者后台->企业自建应用->选择您创建的E应用->查看->AgentId
      */
-    public static final Long AGENT_ID = ;
+    public static final Long AGENT_ID = 0L;
 
     /**
      * 企业管理后台crop_id
