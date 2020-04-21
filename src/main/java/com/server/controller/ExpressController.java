@@ -1,5 +1,6 @@
 package com.server.controller;
 
+import com.core.helper.LJFanweiUtil;
 import com.core.util.R;
 import com.server.pojo.DeptAdmin;
 import com.server.pojo.ExpressDo;
@@ -39,10 +40,10 @@ public class ExpressController {
      * @Author xg.chen
      * @Date 16:28 2020/4/15
     **/
-    @GetMapping("/exprIndex")
+    @GetMapping("/exprIndex")   
     public String expressIndex(HttpServletRequest request, Model model){
-        String userid = request.getParameter("userid");
-//        String userid = "083201343237723187";
+//        String userid = request.getParameter("userid");
+        String userid = "083201343237723187";
         if (userid == null) {
             return "error_1";
         }
@@ -109,8 +110,9 @@ public class ExpressController {
         if (count == 1) {
            //插入成功后需要重构垃圾泛微的数据库
             int id = userService.primary_getExpressInfoId();
-            logger.debug("insert id--->:",id);
-            if (id == 0) {
+            logger.debug("insert id--->:"+id);
+            String string = LJFanweiUtil.HttpFWWebService(id);
+            if ("ERROR".equals(string)) {
                 return R.error(-1,"LJ泛微重构数据库失败");
             }
             return R.ok();
