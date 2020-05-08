@@ -42,8 +42,8 @@ public class ExpressController {
     **/
     @GetMapping("/exprIndex")   
     public String expressIndex(HttpServletRequest request, Model model){
-//        String userid = request.getParameter("userid");
-        String userid = "083201343237723187";
+        String userid = request.getParameter("userid");
+//        String userid = "083201343237723187";
         if (userid == null) {
             return "error_1";
         }

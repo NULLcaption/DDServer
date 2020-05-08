@@ -1,17 +1,21 @@
 package com.server.service.impl;
 
+import com.core.util.Query;
 import com.sap.conn.jco.*;
+import com.sap.mw.jco.JCO;
 import com.server.mapper.UserMapper;
 import com.server.mapper.UserSecondMapper;
 import com.server.mapper.UserThirdlyMapper;
 import com.server.pojo.*;
 import com.server.service.UserService;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -267,6 +271,90 @@ public class UserServiceImpl implements UserService {
     public int primary_getExpressInfoId() {
         try {
             return userMapper.primary_getExpressInfoId();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public ProductInfoDo primary_getProductInfosByCode(CodeInfoDo codeInfoDo) {
+        ProductInfoDo productInfoDo = new ProductInfoDo();
+        try {
+            logger.debug("++++> 开始连接SAP RFC 接口");
+            JCoFunction function = sapDestination.getRepository().getFunction("ZRFC_MM_ZHUISU");
+            //SAP字段传值
+            function.getImportParameterList().setValue("SYTAG",codeInfoDo.getStatus());
+            function.getImportParameterList().setValue("YMD",codeInfoDo.getDate());
+            function.getImportParameterList().setValue( "CFFWERK" ,codeInfoDo.getFactory());
+            function.getImportParameterList().setValue( "LINECODE" ,codeInfoDo.getLineCode());
+            function.getImportParameterList().setValue("TIME", codeInfoDo.getTime());
+            function.getImportParameterList().setValue("KURNO", codeInfoDo.getCode());
+            function.getImportParameterList().setValue("ABEDT", "");
+            logger.debug("+++++> SAP 函数开始执行");
+            //SAP 函数开始执行
+            function.execute(sapDestination);
+            String code = function.getExportParameterList().getValue("EV_CODE").toString();
+            String EV_MSG = function.getExportParameterList().getString("EV_MSG");
+            if (!"0".equals(code)) {
+                logger.debug(EV_MSG);
+                return null;
+            }
+            productInfoDo.setProFactory(function.getExportParameterList().getValue("NAME1").toString());
+            productInfoDo.setSkuName(function.getExportParameterList().getValue("MAKTX").toString());
+            productInfoDo.setBatchNumber(function.getExportParameterList().getValue("CHARG").toString());
+            JCoTable table = function.getTableParameterList().getTable("ET_INFO");
+            List<KunnrDo> list = new ArrayList<>();
+            for (int i = 0; i < table.getNumRows(); i++) {
+                table.setRow(i);
+                KunnrDo kunnrDo = new KunnrDo();
+                kunnrDo.setKunnrId(table.getValue("KUNNR").toString());
+                kunnrDo.setKunnrName(table.getValue("NAME1").toString());
+                list.add(kunnrDo);
+            }
+            productInfoDo.setKunnrDos(list);
+            return productInfoDo;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Long thirdly_saveProductInfo(ProductInfoDo productInfoDo1) {
+        try{
+            return userThirdlyMapper.thirdly_saveProductInfo(productInfoDo1);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0L;
+    }
+
+    @Override
+    public int thirdly_saveProductKunnrs(KunnrDo kunnrDo) {
+        try {
+            userThirdlyMapper.thirdly_saveProductKunnrs(kunnrDo);
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public List<ProductInfoDo> thirdly_getProductInfoDataList(Query query) {
+        try {
+            return userThirdlyMapper.thirdly_getProductInfoDataList(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public int thirdly_getProductInfoData(Query query) {
+        try {
+            return userThirdlyMapper.thirdly_getProductInfoData(query);
         } catch (Exception e) {
             e.printStackTrace();
         }

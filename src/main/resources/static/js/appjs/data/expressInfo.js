@@ -7,14 +7,14 @@
 function scanCode () {
     dd.ready(function () {
         dd.biz.util.scan({
-            type: 'all',
+            type: 'barCode',// type 为 all、qrCode、barCode，默认是all。
             onSuccess: function(data) {
                 var expressNum = data.text;
                 layer.alert(expressNum);
                 $("#expressNum").val(expressNum);
             },
             onFail: function(){
-                console.log("扫码失败");
+                console.log("请扫条形码");
             }
         });
     })

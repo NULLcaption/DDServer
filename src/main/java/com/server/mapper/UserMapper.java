@@ -52,4 +52,5 @@ public interface UserMapper {
     ExpressDo primary_getExpressInfoById(int id);
 
     int primary_getExpressInfoId();
+
 }

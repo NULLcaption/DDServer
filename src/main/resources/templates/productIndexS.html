@@ -39,13 +39,16 @@
                 </div>
                 <div class="panel-body">
                     <div class="caption" style="padding-top: 5px">
-                        <label>生产工厂：</label><label>香飘飘四川食品有限公司</label>
+                        <label>生产工厂：</label>
+                        <label id="proFactory" name="proFactory"></label>
                     </div>
                     <div class="caption" style="padding-top: 5px">
-                        <label>品项：</label><label>丝袜奶茶280ML*1*15</label>
+                        <label>品项：</label>
+                        <label id="skuName" name="skuName" ></label>
                     </div>
                     <div class="caption" style="padding-top: 5px">
-                        <label>批次：</label><label>HL20031801</label>
+                        <label>批次：</label>
+                        <label id="batchNumber" name="batchNumber"></label>
                     </div>
                 </div>
             </div>
@@ -57,15 +60,13 @@
                 </div>
                 <div class="panel-body">
                     <div class="caption" style="padding-top: 5px">
-                        <label>经销商代码：</label><label>经销商名称</label>
-                    </div>
-                    <div class="caption" style="padding-top: 5px">
-                        <label>经销商代码：</label><label>经销商名称</label>
+                        <label id="kunnrs"></label>
                     </div>
                 </div>
             </div>
             <div class="caption">
-                <label>质检报告：</label><a href="http://exp.zjxpp.com:8186/upload_file/crm/qualityChecking/ec5e7f78-fd9c-4e57-9bc0-4112f0c1e69b.pdf">HL20031801</a>
+                <label>质检报告：</label>
+                <a id="Qurl" name="Qurl" href="#">点击查看</a>
             </div>
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -77,14 +78,14 @@
                     <div class="panel-body">
                         <div class="input-group">
                             <span class="input-group-addon">门店地址:</span>
-                            <input type="text" id="address" name="address" value="" class="form-control">
+                            <input type="text" id="adderss" name="adderss" value="" class="form-control">
                             <span class="input-group-btn">
                             <button class="btn btn-default" type="button" onclick="getLocalHost()">获取定位</button>
                             </span>
                         </div>
                         <div class="input-group" style="padding-top: 20px">
                             <span class="input-group-addon">是否串货:</span>
-                            <select id="leaveUnused" name="leaveUnused" class="form-control">
+                            <select id="isCargo" name="isCargo" class="form-control">
                                 <option value=""></option>
                                 <option value="N">否</option>
                                 <option value="Y">是</option>

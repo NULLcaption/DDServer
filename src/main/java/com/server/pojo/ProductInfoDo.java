@@ -1,6 +1,7 @@
 package com.server.pojo;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @Description 产品追溯实体类
@@ -10,15 +11,58 @@ import java.io.Serializable;
 
 public class ProductInfoDo implements Serializable {
 
-    public String proFactory;
-    public String skuId;
-    public String skuName;
-    public String batchNumber;
-    public String kunnrId;
-    public String kunnrName;
-    public String Qurl;
-    public String adderss;
-    public String isCargo;
+    private Long id;
+    private String SCode;
+    private String proFactory;
+    private String skuId;
+    private String skuName;
+    private String batchNumber;
+    private String Qurl;
+    private String adderss;
+    private String isCargo;
+    private String userId;
+    private String kunnrName;
+    private List<KunnrDo> kunnrDos;
+
+    public String getKunnrName() {
+        return kunnrName;
+    }
+
+    public void setKunnrName(String kunnrName) {
+        this.kunnrName = kunnrName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSCode() {
+        return SCode;
+    }
+
+    public void setSCode(String SCode) {
+        this.SCode = SCode;
+    }
+
+    public List<KunnrDo> getKunnrDos() {
+        return kunnrDos;
+    }
+
+    public void setKunnrDos(List<KunnrDo> kunnrDos) {
+        this.kunnrDos = kunnrDos;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getProFactory() {
         return proFactory;
@@ -52,22 +96,6 @@ public class ProductInfoDo implements Serializable {
         this.batchNumber = batchNumber;
     }
 
-    public String getKunnrId() {
-        return kunnrId;
-    }
-
-    public void setKunnrId(String kunnrId) {
-        this.kunnrId = kunnrId;
-    }
-
-    public String getKunnrName() {
-        return kunnrName;
-    }
-
-    public void setKunnrName(String kunnrName) {
-        this.kunnrName = kunnrName;
-    }
-
     public String getQurl() {
         return Qurl;
     }
@@ -92,18 +120,4 @@ public class ProductInfoDo implements Serializable {
         this.isCargo = isCargo;
     }
 
-    @Override
-    public String toString() {
-        return "ProductInfoDo{" +
-                "proFactory='" + proFactory + '\'' +
-                ", skuId='" + skuId + '\'' +
-                ", skuName='" + skuName + '\'' +
-                ", batchNumber='" + batchNumber + '\'' +
-                ", kunnrId='" + kunnrId + '\'' +
-                ", kunnrName='" + kunnrName + '\'' +
-                ", Qurl='" + Qurl + '\'' +
-                ", adderss='" + adderss + '\'' +
-                ", isCargo='" + isCargo + '\'' +
-                '}';
-    }
 }

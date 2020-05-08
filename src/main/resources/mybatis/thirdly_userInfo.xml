@@ -18,4 +18,87 @@
          where 1 = 1 and t.batch_number = #{batchNumber}
     </select>
 
+    <insert id="thirdly_saveProductInfo" parameterType="com.server.pojo.ProductInfoDo">
+        <selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="id">
+            select CRM.CRM_SEQ_PRODUCT_INFO.nextval from dual
+        </selectKey>
+        INSERT INTO CRM.CRM_TB_PRODUCT_INFO (
+        id,
+        S_CODE,
+        PRO_FACTORY,
+        SKU_NAME,
+        BATCH_NUMBER,
+        Q_URL,
+        ADDERSS,
+        IS_CARGO,
+        USER_ID
+        ) VALUES (
+        #{id},
+        #{SCode,jdbcType=VARCHAR},
+        #{proFactory,jdbcType=VARCHAR},
+        #{skuName,jdbcType=VARCHAR},
+        #{batchNumber,jdbcType=VARCHAR},
+        #{Qurl,jdbcType=VARCHAR},
+        #{adderss,jdbcType=VARCHAR},
+        #{isCargo,jdbcType=VARCHAR},
+        #{userId,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="thirdly_saveProductKunnrs" parameterType="com.server.pojo.KunnrDo">
+        INSERT INTO CRM.CRM_TB_PRODUCT_KUNNR (
+        P_ID,
+        KUNNR_ID,
+        KUNNR_NAME
+        ) VALUES (
+        #{pId},
+        #{kunnrId},
+        #{kunnrName}
+        )
+    </insert>
+
+    <select id="thirdly_getProductInfoDataList" parameterType="com.server.pojo.ProductInfoDo"
+            resultType="com.server.pojo.ProductInfoDo">
+        select *
+        from (select row_.*, rownum rownum_
+        from (select t.id,
+        t.s_code SCode,
+        t.pro_factory proFactory,
+        t.sku_name skuName,
+        t.batch_number batchNumber,
+        t.q_url Qurl,
+        t.adderss adderss,
+        t.is_cargo isCargo,
+        t.user_id userId,
+        k.kunnr_name kunnrName
+        from crm.crm_tb_product_info t
+        left join crm.crm_tb_product_kunnr k on k.p_id=t.id
+        <where>
+            <if test="proFactory != null and proFactory != ''">and t.proFactory LIKE '%${proFactory}%'</if>
+            <if test="skuName != null and skuName != ''">and t.skuName LIKE '%${skuName}%'</if>
+            <if test="batchNumber != null and batchNumber != ''">and t.skuName LIKE '%${batchNumber}%'</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by t.id desc
+            </otherwise>
+        </choose>
+        ) row_
+        where rownum &lt;= ${limit})
+        where rownum_ &gt; ${offset}
+    </select>
+
+    <select id="thirdly_getProductInfoData" resultType="java.lang.Integer">
+        select count(*) from crm.crm_tb_product_info t
+        left join crm.crm_tb_product_kunnr k on k.p_id=t.id
+        <where>
+            <if test="proFactory != null and proFactory != ''">and t.proFactory LIKE '%${proFactory}%'</if>
+            <if test="skuName != null and skuName != ''">and t.skuName LIKE '%${skuName}%'</if>
+            <if test="batchNumber != null and batchNumber != ''">and t.skuName LIKE '%${batchNumber}%'</if>
+        </where>
+    </select>
+
 </mapper>

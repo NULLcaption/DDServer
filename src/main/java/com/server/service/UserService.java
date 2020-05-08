@@ -1,8 +1,10 @@
 package com.server.service;
 
+import com.core.util.Query;
 import com.server.pojo.*;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -54,4 +56,16 @@ public interface UserService {
     ExpressDo primary_getExpressInfoById(String id);
 
     int primary_getExpressInfoId();
+
+    ProductInfoDo primary_getProductInfosByCode(CodeInfoDo codeInfoDo);
+
+    @Transactional
+    Long thirdly_saveProductInfo(ProductInfoDo productInfoDo1);
+
+    @Transactional
+    int thirdly_saveProductKunnrs(KunnrDo kunnrDo);
+
+    List<ProductInfoDo> thirdly_getProductInfoDataList(Query query);
+
+    int thirdly_getProductInfoData(Query query);
 }

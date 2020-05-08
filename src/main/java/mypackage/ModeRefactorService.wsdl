@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="ModeRefactorService.service.xpp" xmlns:ns1="http://entity.xpp" xmlns:soapenc12="http://www.w3.org/2003/05/soap-encoding" xmlns:tns="ModeRefactorService.service.xpp" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap11="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc11="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+  <wsdl:types>
+<xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="ModeRefactorService.service.xpp" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:element name="init">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="in0" type="xsd:int"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="in1" type="xsd:int"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="in2" type="xsd:int"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="initResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="ns1:ReturnMessage"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:schema>
+
+<xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://entity.xpp" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:complexType name="ReturnMessage">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="message" nillable="true" type="xsd:string"/>
+<xsd:element minOccurs="0" name="type" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:schema>
+
+  </wsdl:types>
+  <wsdl:message name="initRequest">
+    <wsdl:part name="parameters" element="tns:init">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="initResponse">
+    <wsdl:part name="parameters" element="tns:initResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ModeRefactorServicePortType">
+    <wsdl:operation name="init">
+      <wsdl:input name="initRequest" message="tns:initRequest">
+    </wsdl:input>
+      <wsdl:output name="initResponse" message="tns:initResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ModeRefactorServiceHttpBinding" type="tns:ModeRefactorServicePortType">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="init">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="initRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="initResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ModeRefactorService">
+    <wsdl:port name="ModeRefactorServiceHttpPort" binding="tns:ModeRefactorServiceHttpBinding">
+      <wsdlsoap:address location="http://10.100.0.6:8101/services/ModeRefactorService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

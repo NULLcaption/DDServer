@@ -1,10 +1,10 @@
 #For tests only !
-#Fri Apr 17 08:21:35 CST 2020
+#Fri May 08 11:10:46 CST 2020
 jco.client.lang=en
 jco.destination.peak_limit=150
-jco.client.client=800
-jco.client.passwd=xpp2@12
+jco.client.client=700
+jco.client.passwd=poiuyt
 jco.client.sysnr=00
-jco.client.user=abaprfc
+jco.client.user=RFC
 jco.destination.pool_capacity=30
-jco.client.ashost=192.168.0.12
+jco.client.ashost=192.168.0.16

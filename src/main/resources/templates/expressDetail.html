@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="wpk-bid" content="dta_1_262106545">
+    <script>    !(function (c, i, e, b) {
+        var h = i.createElement("script");
+        var f = i.getElementsByTagName("script")[0];
+        h.type = "text/javascript";
+        h.crossorigin = true;
+        h.onload = function () {
+            c[b] || (c[b] = new c.wpkReporter({bid: "dta_1_262106545"}));
+            c[b].installAll()
+        };
+        f.parentNode.insertBefore(h, f);
+        h.src = e
+    })(window, document, "https://g.alicdn.com/woodpeckerx/jssdk??wpkReporter.js", "__wpk");</script>
+    <title>快递登记</title>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet" th:href="@{/css/bootstrap.min.css?v=3.3.6}">
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet" th:href="@{/css/plugins/toastr/toastr.min.css}">
+    <link href="/css/animate.css" rel="stylesheet" th:href="@{/css/animate.css}">
+</head>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column" style="padding-top: 10%">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">快递登记详情单</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="caption" style="padding-top: 5px">
+                        <label>登记日期：</label><label th:text="${expressDo.creatDate}"></label>
+                    </div>
+                    <div class="caption" style="padding-top: 5px">
+                        <label>快递公司：</label><label th:text="${expressDo.expressCompany}"></label>
+                    </div>
+                    <div class="caption" style="padding-top: 5px">
+                        <label>快递单号：</label><label th:text="${expressDo.expressNum}"></label>
+                    </div>
+                    <div class="caption" style="padding-top: 5px">
+                        <label>寄件人：</label><label th:text="${expressDo.userName}"></label>
+                    </div>
+                    <div class="caption" style="padding-top: 5px">
+                        <label>寄件部门：</label><label th:text="${expressDo.orgName}"></label>
+                    </div>
+                    <div class="caption" style="padding-top: 5px">
+                        <label>代寄件人：</label><label th:text="${expressDo.dName}"></label>
+                    </div>
+                    <div class="caption" style="padding-top: 5px">
+                        <label>费用归属：</label><label th:text="${expressDo.costBelonging}"></label>
+                    </div>
+                    <div class="caption" style="padding-top: 5px">
+                        <label>说明：</label><label th:text="${expressDo.explain}"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script src="/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+<script type="text/javascript" src="http://g.alicdn.com/dingding/open-develop/1.6.9/dingtalk.js"></script>
+<script type="text/javascript" src="/js/appjs/data/index.js" th:src="@{/js/appjs/data/index.js}"></script>
+</body>
+</html>

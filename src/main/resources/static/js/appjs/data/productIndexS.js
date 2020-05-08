@@ -129,17 +129,60 @@ function searchData(){
         layer.msg("请输入正确的信息！");
         return;
     }
-
+    var loadIndex = '';
     $.ajax({
         url : '/dd/standard?dataCode=' + dataCode,
         type : 'GET',
+        beforeSend: function () {
+            loadIndex = layer.load(1, {
+                shade: [0.1, '#fff']
+            });
+        },
         success : function(data, status, xhr) {
-            layer.alert(data);
+            layer.close(loadIndex);
+            var info = JSON.parse(data);
+            document.getElementById("proFactory").innerHTML = info.proFactory;
+            document.getElementById("skuName").innerHTML = info.skuName;
+            document.getElementById("batchNumber").innerHTML = info.batchNumber;
+            document.getElementById("Qurl").href = info.Qurl;
+            var kunnrs = document.getElementById("kunnrs");
+            var str = "";
+            for (var i in info.kunnrDos) {
+                str = str + info.kunnrDos[i].kunnrId+":"+info.kunnrDos[i].kunnrName+"<br>";
+            }
+            document.getElementById("kunnrs").innerHTML = str;
         },
         error : function(xhr, errorType, error) {
             layer.alert(errorType + ', ' + error);
         }
     });
 
+}
+/**
+ * 保存过程数据
+ */
+function submitData() {
+    var address = $("#address").val();
+    if (address == "") {
+        layer.alert("查询地址为空，请重新定位")
+    }
+    var isCargo = $("#isCargo").val();
+    if (isCargo == "") {
+        layer.alert("请选择串货情况")
+    }
+    $.ajax({
+        type: "POST",
+        url: "/dd/saveInfo",
+        data : $("#submitData").serialize(),
+        success: function (r) {
+            if(r.code == 0) {
+                layer.alert(r.msg);
+                $("#address").val("");
+                $("#isCargo").val("");
+            } else {
+                layer.alert(r.msg);
+            }
+        }
+    })
 }
 
