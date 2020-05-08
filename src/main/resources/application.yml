@@ -25,16 +25,16 @@ spring:
     primary:
       type: com.alibaba.druid.pool.DruidDataSource
       driverClassName: oracle.jdbc.OracleDriver
-      url: jdbc:oracle:thin:oradba/ora123456@10.100.0.13:1521:ecologyPRD
-      username: oradba
-      password: ora123456
+      url: jdbc:oracle:thin:oradba/ora123456@127.0.0.1:1521:aaa
+      username: aaaa
+      password: aaa
     # 辅数据源 云桥
     secondary:
       type: com.alibaba.druid.pool.DruidDataSource
       driverClassName: com.mysql.jdbc.Driver
-      url: jdbc:mysql://10.100.0.5:4706/ewechat?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=true
-      username: root
-      password: Wewechat
+      url: jdbc:mysql://127.0.0.1:1512/aaaa?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=true
+      username: aaaa
+      password: aaaa
       #验证连接的有效性
       test-while-idle: true
       #获取连接时候验证，会影响性能
@@ -48,12 +48,9 @@ spring:
     thirdly:
       type: com.alibaba.druid.pool.DruidDataSource
       driverClassName: oracle.jdbc.driver.OracleDriver
-#      url: jdbc:oracle:thin:exp/exp123@10.100.0.10:1530:expora
-#      username: exp
-#      password: exp123
-      url: jdbc:oracle:thin:osap/osaptest@10.0.5.16:1521:expdbtest
-      username: osap
-      password: osap
+      url: jdbc:oracle:thin:osap/osaptest@127.0.0.1:1521:test
+      username: aaa
+      password: aaa
       initialSize: 1
       minIdle: 10
       maxActive: 1000
@@ -94,10 +91,10 @@ mybatis:
 #SAP测试机连接配置
 jco :
   client :
-    ashost : 192.168.0.16
-    client : 700
-    user : RFC
-    passwd : poiuyt
+    ashost : 127.0.0.11
+    client : 0
+    user : aaa
+    passwd : aaa
 
 #SAP正式机连接配置
 #jco :
